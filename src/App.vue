@@ -1,28 +1,54 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <div class="row">
+        <div class="col-8 offset-2 mt-3">
+          <section>
+            <button
+              class="btn btn-sm btn-dark divide"
+              @click="getData('less')">Загрузить малую часть
+            </button>
+            <button
+              class="btn btn-sm btn-dark"
+              @click="getData('more')">Загрузить большую часть
+            </button>
+          </section>
+          <main class="mt-5">
+            <Table :data="this.$store.state.data" />
+          </main>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import Table from '@/components/Table.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Table,
+  },
+  methods: {
+    getData(qty) {
+      switch (qty) {
+        case 'less':
+          this.$store.dispatch('setLessData');
+          break;
+        case 'more':
+          this.$store.dispatch('setMoreData');
+          break;
+        default:
+          break;
+      }
+    },
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.divide {
+  margin-right: 8px;
 }
 </style>
