@@ -3,21 +3,23 @@
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th scope="col">id</th>
-          <th scope="col">firstName</th>
-          <th scope="col">lastName</th>
-          <th scope="col">email</th>
-          <th scope="col">phone</th>
+          <th
+            class="table-head"
+            scope="col"
+            v-for="(field, idx) in tableFields"
+            :key="idx"
+            @click="sortTable(`${field}`)"
+          >
+            <span>{{ field }}</span>
+            <span v-if="sortField === `${field}` && sortDirection === 1">&nbsp;▼</span>
+            <span v-if="sortField === `${field}` && sortDirection === -1">&nbsp;▲</span>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, idx) in data" :key="idx">
-        <td>{{ item.id }}</td>
-        <td>{{ item.firstName }}</td>
-        <td>{{ item.lastName }}</td>
-        <td>{{ item.email }}</td>
-        <td>{{ item.phone }}</td>
-      </tr>
+        <tr v-for="(item, idx) in this.$store.state.data" :key="idx">
+          <td v-for="(field, idx) in tableFields" :key="idx">{{ item[field] }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -26,6 +28,35 @@
 <script>
 export default {
   name: 'Table',
-  props: ['data'],
+  data() {
+    return {
+      tableFields: ['id', 'firstName', 'lastName', 'email', 'phone'],
+      sortField: '',
+      sortDirection: 1,
+    };
+  },
+  methods: {
+    sortTable(sortField) {
+      if (this.$store.state.data) {
+        if (this.sortField === sortField) {
+          this.sortDirection *= -1;
+        } else {
+          this.sortField = sortField;
+          this.sortDirection = 1;
+        }
+        this.$store.dispatch('sortData', [this.sortField, this.sortDirection]);
+      }
+    },
+  },
 };
 </script>
+
+<style>
+.table-head {
+  cursor: pointer;
+}
+
+.table-head:hover {
+  color: lightblue;
+}
+</style>

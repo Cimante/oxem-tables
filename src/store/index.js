@@ -24,5 +24,11 @@ export default new Vuex.Store({
         .then((res) => context.commit('addData', res))
         .then(() => context.commit('toggleLoading', false));
     },
+    sortData({ commit, state }, payload) {
+      const [sortField, sortDirection] = [...payload];
+      const tempData = state.data;
+      tempData.sort((a, b) => (a[sortField] > b[sortField] ? sortDirection : -1 * sortDirection));
+      commit('addData', tempData);
+    },
   },
 });

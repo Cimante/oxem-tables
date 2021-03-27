@@ -15,7 +15,7 @@
             </button>
           </section>
           <main class="mt-5">
-            <Table :data="this.$store.state.data" />
+            <Table />
           </main>
         </div>
       </div>
