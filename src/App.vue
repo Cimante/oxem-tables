@@ -15,7 +15,7 @@
             </button>
           </section>
           <main class="mt-5">
-            <Table />
+            <Table v-if="this.$store.state.data"/>
           </main>
         </div>
       </div>
