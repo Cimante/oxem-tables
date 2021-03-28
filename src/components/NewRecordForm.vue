@@ -3,8 +3,6 @@
     <button class="btn btn-success btn-sm" @click="toggleFormVisibility">Добавить запись</button>
     <div class="form-wrapper" v-if="showForm">
       <form class="form" @submit.prevent="handleSubmit()">
-        <span>ID – {{ newRecord.id }}</span>
-        <span>City – {{ newRecord.address }}</span>
         <div class="form-group d-flex justify-content-between mb-3">
           <label for="form__id" class="form__required-field">ID</label>
           <div class="input-wrapper d-flex flex-column">
@@ -185,7 +183,8 @@
             class="btn btn-outline-danger btn-sm" @click="toggleFormVisibility">Закрыть</button>
           <button
             type="submit"
-            class="btn btn-success btn-sm">Добавить</button>
+            class="btn btn-success btn-sm"
+            :disabled="$v.$invalid">Добавить в таблицу</button>
         </section>
       </form>
     </div>
