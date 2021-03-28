@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     data: [],
+    dataCopy: [],
     choosenItem: null,
     loading: false,
   },
@@ -25,6 +26,12 @@ export default new Vuex.Store({
     addRecord(state, payload) {
       state.data.unshift(payload);
     },
+    copyData(state) {
+      state.dataCopy = state.data;
+    },
+    restoreData(state) {
+      state.data = state.dataCopy;
+    },
   },
   actions: {
     setData(context, url) {
@@ -33,6 +40,7 @@ export default new Vuex.Store({
       fetch(url)
         .then((response) => response.json())
         .then((res) => context.commit('addData', res))
+        .then(() => context.commit('copyData'))
         .then(() => context.commit('toggleLoading', false));
     },
     sortData({ commit, state }, payload) {
@@ -46,6 +54,29 @@ export default new Vuex.Store({
     },
     addRecord(context, payload) {
       context.commit('addRecord', JSON.parse(JSON.stringify(payload)));
+      context.commit('copyData');
+    },
+    applyFilter({ commit, state }, payload) {
+      // Object.values(item).toString().includes(payload.toString())
+      // key.map((deepkey) => deepkey.toString().includes(searchQuery)))));
+      const searchQuery = payload.toString();
+      const FilteredData = state.data.filter((item) => {
+        let flag = false;
+        Object.values(item).forEach((value) => {
+          if (typeof value === 'object') {
+            if (Object.values(value).toString().includes(searchQuery)) {
+              flag = true;
+            }
+          } else if (value.toString().includes(searchQuery)) {
+            flag = true;
+          }
+        });
+        return flag;
+      });
+      commit('addData', FilteredData);
+    },
+    restoreData(context) {
+      context.commit('restoreData');
     },
   },
 });

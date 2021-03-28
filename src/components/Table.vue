@@ -1,16 +1,19 @@
 <template>
   <div id="Table">
-    <form>
-      <label for="sizeRecordsField" class="divide">Кол-во записей на странице:</label>
-      <input
-        id="sizeRecordsField"
-        type="number"
-        min="1"
-        max="50"
-        class="inputSizeRecords"
-        v-model.lazy.number="sizeRecords"
-        @change="inputSizeRecordsValue()">
-    </form>
+    <div class="d-flex justify-content-between">
+      <form>
+        <label for="sizeRecordsField" class="divide">Кол-во записей на странице:</label>
+        <input
+          id="sizeRecordsField"
+          type="number"
+          min="1"
+          max="50"
+          class="inputSizeRecords"
+          v-model.lazy.number="sizeRecords"
+          @change="inputSizeRecordsValue()">
+      </form>
+      <vFilter />
+    </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -63,8 +66,13 @@
 </template>
 
 <script>
+import vFilter from '@/components/Filter.vue';
+
 export default {
   name: 'Table',
+  components: {
+    vFilter,
+  },
   data() {
     return {
       tableFields: ['id', 'firstName', 'lastName', 'email', 'phone'],
