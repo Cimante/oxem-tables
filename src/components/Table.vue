@@ -29,7 +29,12 @@
       </thead>
       <tbody>
         <tr v-for="(item, idx) in paginatedData" :key="idx">
-          <td v-for="(field, idx) in tableFields" :key="idx">{{ item[field] }}</td>
+          <td
+            class="table-row"
+            v-for="(field, idx) in tableFields"
+            :key="idx"
+            @click="showMore(item)">{{ item[field] }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -103,6 +108,9 @@ export default {
       if (this.sizeRecords < 1) this.sizeRecords = 1;
       if (this.sizeRecords > 50) this.sizeRecords = 50;
     },
+    showMore(payload) {
+      this.$store.dispatch('setChoosenItem', payload);
+    },
   },
 };
 </script>
@@ -114,6 +122,10 @@ export default {
 
 .table-head:hover {
   color: lightblue;
+}
+
+.table-row {
+  cursor: pointer;
 }
 
 .inputSizeRecords {

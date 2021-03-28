@@ -16,6 +16,7 @@
           </section>
           <main class="mt-5">
             <Table v-if="this.$store.state.data"/>
+            <TableItem v-if="this.$store.state.choosenItem" :item="this.$store.state.choosenItem"/>
           </main>
         </div>
       </div>
@@ -26,12 +27,14 @@
 <script>
 import Table from '@/components/Table.vue';
 import Loader from '@/components/Loader.vue';
+import TableItem from '@/components/TableItem.vue';
 
 export default {
   name: 'App',
   components: {
     Table,
     Loader,
+    TableItem,
   },
   methods: {
     getData(qty) {
