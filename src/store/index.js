@@ -45,7 +45,7 @@ export default new Vuex.Store({
       context.commit('setChoosenItem', payload);
     },
     addRecord(context, payload) {
-      context.commit('addRecord', payload);
+      context.commit('addRecord', JSON.parse(JSON.stringify(payload)));
     },
   },
 });
