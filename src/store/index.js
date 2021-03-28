@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: null,
+    data: [],
     choosenItem: null,
     loading: false,
   },
@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     clearChoosenItem(state) {
       state.choosenItem = null;
+    },
+    addRecord(state, payload) {
+      state.data.unshift(payload);
     },
   },
   actions: {
@@ -40,6 +43,9 @@ export default new Vuex.Store({
     },
     setChoosenItem(context, payload) {
       context.commit('setChoosenItem', payload);
+    },
+    addRecord(context, payload) {
+      context.commit('addRecord', payload);
     },
   },
 });

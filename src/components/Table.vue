@@ -1,6 +1,6 @@
 <template>
   <div id="Table">
-    <form class="mb-4">
+    <form>
       <label for="sizeRecordsField" class="divide">Кол-во записей на странице:</label>
       <input
         id="sizeRecordsField"

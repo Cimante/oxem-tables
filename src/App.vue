@@ -4,18 +4,19 @@
     <div class="container">
       <div class="row">
         <div class="col-8 offset-2 mt-3">
-          <section>
+          <section class="d-flex">
             <button
               class="btn btn-sm btn-dark divide"
               @click="getData('less')">Загрузить малую часть
             </button>
             <button
-              class="btn btn-sm btn-dark"
+              class="btn btn-sm btn-dark divide"
               @click="getData('more')">Загрузить большую часть
             </button>
+            <NewRecordForm />
           </section>
           <main class="mt-5">
-            <Table v-if="this.$store.state.data"/>
+            <Table v-if="this.$store.state.data && this.$store.state.data.length > 0"/>
             <TableItem v-if="this.$store.state.choosenItem" :item="this.$store.state.choosenItem"/>
           </main>
         </div>
@@ -28,6 +29,7 @@
 import Table from '@/components/Table.vue';
 import Loader from '@/components/Loader.vue';
 import TableItem from '@/components/TableItem.vue';
+import NewRecordForm from '@/components/NewRecordForm.vue';
 
 export default {
   name: 'App',
@@ -35,6 +37,7 @@ export default {
     Table,
     Loader,
     TableItem,
+    NewRecordForm,
   },
   methods: {
     getData(qty) {
